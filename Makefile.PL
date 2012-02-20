@@ -2,15 +2,18 @@ use strict;
 use warnings;
 
 use ExtUtils::MakeMaker;
+use File::Spec::Functions 'catfile';
 
 sub main {
 
     my $site = 'https://github.com/potyl/perl-App-deckjs2pdf';
+    my $script = catfile('bin', 'deckjs2pdf');
 
     WriteMakefile(
-        AUTHOR       => 'Emmanuel Rodriguez <potyl@cpan.org>',
         NAME         => 'App::deckjs2pdf',
-        VERSION_FROM => 'bin/deckjs2pdf',
+        ABSTRACT     => "Convert a Deck.js presentation to PDF",
+        AUTHOR       => 'Emmanuel Rodriguez <potyl@cpan.org>',
+        VERSION_FROM => $script,
         PREREQ_PM => {
             'Getopt::Long'   => 0,
             'Pod::Usage'     => 0,
@@ -24,12 +27,14 @@ sub main {
             'Glib'                        => 0,
         },
         LICENSE => 'perl',
-        EXE_FILES => [ 'bin/deckjs2pdf' ],
+        EXE_FILES => [ $script ],
 
         META_MERGE => {
-            homepage   => $site,
-            bugtracker => "$site/issues",
-            repository =>  $site,
+            resources => {
+                homepage   => $site,
+                bugtracker => "$site/issues",
+                repository =>  $site,
+            },
         },
     );
 
